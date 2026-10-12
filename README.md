@@ -207,6 +207,11 @@ occurrence.alarm.acknowledge(...)
 occurrence.alarm.unacknowledge(...)
 ```
 
+### 5. Saving
+
+The result is in the calendar that was parsed before. The calendar can be saved with `to_ical()`, `to_jcal()` and `to_xcal()`.
+Creating a new query will consider saved edits of the calendar.
+
 ## Implementation
 
 Dependencies of `edit-icalendar`:
