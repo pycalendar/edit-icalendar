@@ -1,4 +1,4 @@
-# edit-icalendar
+# edit-icalendar (draft)
 
 Edit icalendar files, recurring events, todos, alarms and more.
 
