@@ -161,25 +161,43 @@ event = cal.events.after(date(2026, 1, 3)).first
 
 event.start # 2026-01-03
 
-edit = event.edit = "Edited"
+edit = event.edit
+edit.summary = "Edited"
+edit.save.this()
+
+edit.get_component() # read-only view of the resulting component
 ```
 Saving it has different possibilities.
 
-This is the series of events (with the same `UID`) of which one event gets edited.
+This is the series of events (with the same `UID`) of which one event gets edited with `occurrence.edit.save.<method>()`
 
-| Time | Old Summary | `save_this()` |
-| ---- | ---- | ------- |
-| 2026-01-01 | Original | Original |
-| 2026-01-02 | Original | Original |
-| 2026-01-03 | Original | Edited   |
-| 2026-01-04 | Original | Original |
-| 2026-01-05 | Original | Original |
+| Time | Old Summary | `this` | `future` | `this_and_future` | `prior` | `this_and_prior` | `all` |
+| ---- | ---- | ------- | ---- | ---- | ------- | ---- |  ---- | 
+| 2026-01-01 | Original | Original | Original | Original | Edited   | Edited   | Edited   |
+| 2026-01-02 | Original | Original | Original | Original | Edited   | Edited   | Edited   |
+| 2026-01-03 | Original | Edited   | Original | Edited   | Original | Edited   | Edited   |
+| 2026-01-04 | Original | Original | Edited   | Edited   | Original | Original | Edited   |
+| 2026-01-05 | Original | Original | Edited   | Edited   | Original | Original | Edited   |
 
-- `save_this()` edits only this event.
+For deletion, the same functionality can be used with `occurrence.delete.<method>()`.
+In the table "-" means deleted.
+
+| Time | Old Summary | `this` | `future` | `this_and_future` | `prior` | `this_and_prior` | `all` |
+| ---- | ---- | ------- | ---- | ---- | ------- | ---- |  ---- | 
+| 2026-01-01 | Original | Original | Original | Original | -   | -   | - |
+| 2026-01-02 | Original | Original | Original | Original | -   | -   | - |
+| 2026-01-03 | Original | -   | Original | -   | Original | -   | - |
+| 2026-01-04 | Original | Original | -   | -   | Original | Original | - |
+| 2026-01-05 | Original | Original | -   | -   | Original | Original | - |
+
+Special handling needs to be done for:
+
+- Moving events (start, end)
+- Changing duration (set, reduce, add)
 
 #### Alarms
 
-Alarms are a bit different again. They can be 
+Alarms are a bit different again. They have different additional operations.
 
 ```python
 occurrence.alarm.delete(...)
