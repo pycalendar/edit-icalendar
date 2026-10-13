@@ -212,6 +212,16 @@ occurrence.alarm.unacknowledge(...)
 The result is in the calendar that was parsed before. The calendar can be saved with `to_ical()`, `to_jcal()` and `to_xcal()`.
 Creating a new query will consider saved edits of the calendar.
 
+## Design decisions
+
+This is a new library based on `recurring-ical-events` because:
+
+- `recurring-ical-events` has a stable interface, recurrence calculation is its sole focus.
+- While this library is experimental, people do not need to be bothered with major versions bumps that do not interest them.
+- Having a clear scope helps with getting users and contributions.
+- `recurring-ical-events` will undergo changes independently and so fixing a version of it might be good for end-users.
+
+
 ## Implementation
 
 Dependencies of `edit-icalendar`:
